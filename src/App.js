@@ -1,6 +1,7 @@
 import React from 'react';
 import UserList from './components/UserList';
 import UserAddForm from './components/UserAddForm';
+import PostList from './components/PostList';
 import './App.css';
 
 class App extends React.Component {
@@ -8,7 +9,11 @@ class App extends React.Component {
     super();
     this.state = {
       background: 'white',
-      users: []
+      color: 'black',
+      users: [],
+      posts: [],
+      showUsers:true,
+      showPosts:false
     };
   }
 
@@ -19,13 +24,25 @@ class App extends React.Component {
         data = data.filter(user => user.id < 4);
         data.forEach(user => {
           user.isGoldClient = false;
+          user.salary = '10000';
         });
         this.setState({users: data});
+      })
+
+
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(data => {
+        data=data.filter(post => post.id < 4);
+        this.setState({posts: data});
       })
   }
 
   changeColor(event) {
     this.setState({background: event.target.value});
+  }
+  changeText(event){
+    this.setState({color: event.target.value});
   }
 
   getMaxId(users) {
@@ -40,7 +57,9 @@ class App extends React.Component {
     return maxId;
   }
 
-  submitAddForm(event, name, email, isGoldClient) {
+  
+
+  submitAddForm(event, name, email, isGoldClient, salary) {
     event.preventDefault();
     this.setState(prevState => {
       return {
@@ -50,20 +69,50 @@ class App extends React.Component {
             id: this.getMaxId(prevState.users) + 1,
             name,
             email,
-            isGoldClient
+            isGoldClient,
+            salary
           }
         ]
       }
     });
   }
 
+
+  handleShowUsers() {
+    this.setState({showUsers: true});
+    this.setState({showPosts: false});
+  }
+  handleShowPosts() {
+    this.setState({showUsers: false});
+    this.setState({showPosts: true});
+  }
+
+
   render() {
     return(
-      <div className="app" style={{background: this.state.background}}>
+      <div className="app" style={{background: this.state.background, color: this.state.color}}>
         <h1>Admin panel - Proiectul 1</h1>
-        <UserAddForm submitAddForm={(event, name, email, isGoldClient) => this.submitAddForm(event, name, email, isGoldClient)}/>
-        <UserList users={this.state.users}/>
-        <input type="color" onChange={(event) => this.changeColor(event)}/>
+        <input type="submit" value="Afiseaza utilizatorii" onClick={(event) => this.handleShowUsers(event)}/>
+        <input type="submit" value="Afiseaza postarile" onClick={(event) => this.handleShowPosts(event)}/>
+        <UserAddForm submitAddForm={(event, name, email, isGoldClient, salary) => this.submitAddForm(event, name, email, isGoldClient,salary)}/>
+
+        {
+          this.state.showUsers === true
+          ? <UserList users={this.state.users}/>
+          :null
+        }
+        {
+          this.state.showPosts === true
+          ? <PostList posts={this.state.posts}/>
+          :null
+        }
+
+
+        
+        <label htmlFor="change-background-color">Schimba fundalul</label>
+        <input type="color" name="change-background-color" onChange={(event) => this.changeColor(event)}/>
+        <label htmlFor="change-text-color">Schimba culoarea textului</label>
+        <input type="color" name="change-text-color" onChange={(event) => this.changeText(event)}/>
       </div>
     );
   }
