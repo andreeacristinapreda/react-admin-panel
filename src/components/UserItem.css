@@ -1,0 +1,14 @@
+.user-item{
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    padding: 2rem;
+    border: 0.5rem solid pink;
+    margin: 2rem;
+    
+}
+
+.user-item img{
+    width: 150px;
+    height: 100px;
+}
