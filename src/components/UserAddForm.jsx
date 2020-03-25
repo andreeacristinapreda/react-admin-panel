@@ -6,7 +6,8 @@ class UserAddForm extends React.Component {
         this.state = {
             name: '',
             email: '',
-            isGoldClient: false
+            isGoldClient: false,
+            salary:''
         };
     }
 
@@ -22,13 +23,17 @@ class UserAddForm extends React.Component {
         this.setState({isGoldClient: event.target.checked});
     }
 
+    updateSalary(event){
+        this.setState({salary: event.target.value});
+    }
+
     render() {
-        const {name, email, isGoldClient} = this.state;
+        const {name, email, isGoldClient, salary} = this.state;
 
         return (
             <form
                 className="user-add-form"
-                onSubmit={(event) => this.props.submitAddForm(event, name, email, isGoldClient)}
+                onSubmit={(event) => this.props.submitAddForm(event, name, email, isGoldClient, salary)}
             >
                 <h2>Adauga utilizatori:</h2>
                 <label htmlFor="name">Nume:</label>
@@ -36,12 +41,15 @@ class UserAddForm extends React.Component {
                     type="text"
                     name="name"
                     onChange={(event) => this.updateName(event)}
+                    required
                 />
                 <label htmlFor="email">Email:</label>
                 <input
-                    type="text"
+                    type="email"
                     name="email"
                     onChange={(event) => this.updateEmail(event)}
+                    placeholder="someone@example.com"
+                    required
                 />
                 <label htmlFor="is-gold-client">Client GOLD</label>
                 <input
@@ -49,6 +57,12 @@ class UserAddForm extends React.Component {
                     name="is-gold-client"
                     value="true"
                     onChange={(event) => this.updateIsGoldClient(event)}
+                />
+                <label htmlFor="salary">Salariu:</label>
+                <input
+                    type="number"
+                    name="salary"
+                    onChange={(event)=> this.updateSalary(event)}
                 />
 
                 <input type="submit" value="Introdu utilizatorul"/>
