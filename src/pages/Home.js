@@ -1,10 +1,12 @@
 import React from 'react';
-import UserList from './components/UserList';
-import UserAddForm from './components/UserAddForm';
-import PostList from './components/PostList';
-import './App.css';
+import UserList from '../components/UserList';
+import UserAddForm from '../components/UserAddForm';
+import PostList from '../components/PostList';
+import './Home.css';
+import {Link} from 'react-router-dom';
 
-class App extends React.Component {
+
+class Home extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -91,6 +93,9 @@ class App extends React.Component {
   render() {
     return(
       <div className="app" style={{background: this.state.background, color: this.state.color}}>
+
+      <Link to='/about'>About</Link>
+        
         <h1>Admin panel - Proiectul 1</h1>
         <input type="submit" value="Afiseaza utilizatorii" onClick={(event) => this.handleShowUsers(event)}/>
         <input type="submit" value="Afiseaza postarile" onClick={(event) => this.handleShowPosts(event)}/>
@@ -107,15 +112,17 @@ class App extends React.Component {
           :null
         }
 
-
-        
         <label htmlFor="change-background-color">Schimba fundalul</label>
         <input type="color" name="change-background-color" onChange={(event) => this.changeColor(event)}/>
         <label htmlFor="change-text-color">Schimba culoarea textului</label>
         <input type="color" name="change-text-color" onChange={(event) => this.changeText(event)}/>
+
+        
+      
+
       </div>
     );
   }
 }
 
-export default App;
+export default Home;
