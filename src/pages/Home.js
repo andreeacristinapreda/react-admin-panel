@@ -27,6 +27,7 @@ class Home extends React.Component {
         data.forEach(user => {
           user.isGoldClient = false;
           user.salary = '10000';
+          user.deleted = false;
         });
         this.setState({users: data});
       })
@@ -61,7 +62,7 @@ class Home extends React.Component {
 
   
 
-  submitAddForm(event, name, email, isGoldClient, salary) {
+  submitAddForm(event, name, email, isGoldClient, salary, deleted) {
     event.preventDefault();
     this.setState(prevState => {
       return {
@@ -72,7 +73,8 @@ class Home extends React.Component {
             name,
             email,
             isGoldClient,
-            salary
+            salary,
+            deleted
           }
         ]
       }
@@ -89,6 +91,14 @@ class Home extends React.Component {
     this.setState({showPosts: true});
   }
 
+  handleDelete(){
+    const notDeletedUsers = this.state.users.filter((user)=> user.deleted !== true);
+    this.setState({users: notDeletedUsers});
+  }
+
+ 
+
+
 
   render() {
     return(
@@ -96,7 +106,7 @@ class Home extends React.Component {
 
       <Link to='/about'>About</Link>
         
-        <h1>Admin panel - Proiectul 1</h1>
+        <h1>Admin panel</h1>
         <input type="submit" value="Afiseaza utilizatorii" onClick={(event) => this.handleShowUsers(event)}/>
         <input type="submit" value="Afiseaza postarile" onClick={(event) => this.handleShowPosts(event)}/>
         <UserAddForm submitAddForm={(event, name, email, isGoldClient, salary) => this.submitAddForm(event, name, email, isGoldClient,salary)}/>
@@ -116,9 +126,6 @@ class Home extends React.Component {
         <input type="color" name="change-background-color" onChange={(event) => this.changeColor(event)}/>
         <label htmlFor="change-text-color">Schimba culoarea textului</label>
         <input type="color" name="change-text-color" onChange={(event) => this.changeText(event)}/>
-
-        
-      
 
       </div>
     );

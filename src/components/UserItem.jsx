@@ -9,7 +9,7 @@ class UserItem extends React.Component{
             email: props.email,
             isGoldClient: props.isGoldClient,
             salary: props.salary,
-            deleted: false
+            deleted: props.deleted
         };
     }
 
@@ -17,6 +17,8 @@ class UserItem extends React.Component{
     
     isDeleted(){
         this.setState({deleted: true});
+        console.log(this.state.deleted);
+        //nu se schimba stateul deleted din prima
     }
 
 
