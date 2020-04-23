@@ -1,6 +1,6 @@
 # JavaScript React application - Admin Panel
 
-## This app contains conditional rendering of users/posts from a satic API.
+## This app contains conditional rendering of users/posts from a static API.
 ## Deals with changes in the state of components
 ## Routing: contains a Home page and links to other pages.
 
